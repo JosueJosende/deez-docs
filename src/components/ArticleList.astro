@@ -1,0 +1,55 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  title?: string;
+  featured?: boolean;
+}
+
+const { articles, title, featured = false } = Astro.props;
+---
+
+<section class="article-list">
+  {title && <h2 class="section-title">{title}</h2>}
+  
+  <div class="articles-grid">
+    {articles.map(article => (
+      <ArticleCard
+        title={article.data.title}
+        description={article.data.description}
+        pubDate={article.data.pubDate}
+        category={article.data.category}
+        url={`/article/${article.slug}`}
+        featured={featured ? article.data.featured : false}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .article-list {
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+  
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 640px) {
+    .articles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

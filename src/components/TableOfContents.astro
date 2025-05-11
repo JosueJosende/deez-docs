@@ -1,0 +1,129 @@
+---
+interface TOCItem {
+  id: string;
+  text: string;
+  depth: number;
+}
+
+interface Props {
+  headings: TOCItem[];
+}
+
+const { headings } = Astro.props;
+---
+
+{headings.length > 0 && (
+  <div class="toc">
+    <h2 class="toc-title">Table of Contents</h2>
+    <nav class="toc-nav">
+      <ul>
+        {headings.map((heading) => (
+          <li class={`depth-${heading.depth}`}>
+            <a href={`#${heading.id}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+)}
+
+<script>
+  // Highlight current section in TOC based on scroll position
+  document.addEventListener('DOMContentLoaded', () => {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    
+    const observerOptions = {
+      rootMargin: '-100px 0px -70% 0px',
+      threshold: 0
+    };
+    
+    const headingsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const tocLink = document.querySelector(`.toc-nav a[href="#${id}"]`);
+        
+        if (tocLink) {
+          if (entry.isIntersecting) {
+            // Remove 'active' class from all links
+            tocLinks.forEach(link => link.classList.remove('active'));
+            // Add 'active' class to current link
+            tocLink.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all headings referenced in the TOC
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href')?.substring(1);
+      const heading = document.getElementById(id || '');
+      if (heading) {
+        headingsObserver.observe(heading);
+      }
+    });
+  });
+</script>
+
+<style>
+  .toc {
+    position: sticky;
+    top: 6rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    background-color: var(--color-bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .toc-title {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .toc-nav li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.25rem 0;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    padding-left: 0.5rem;
+  }
+  
+  .toc-nav a:hover {
+    color: var(--color-primary);
+  }
+  
+  .toc-nav a.active {
+    color: var(--color-primary);
+    border-left-color: var(--color-primary);
+  }
+  
+  .depth-2 {
+    padding-left: 0;
+  }
+  
+  .depth-3 {
+    padding-left: 1rem;
+  }
+  
+  .depth-4 {
+    padding-left: 2rem;
+  }
+</style>

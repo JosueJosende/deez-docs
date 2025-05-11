@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<Layout title="About DevDocs" description="About the DevDocs documentation site">
+  <main class="about-page">
+    <div class="container-narrow">
+      <Breadcrumbs crumbs={[
+        { label: 'About', href: '/about' }
+      ]} />
+      
+      <h1>About DevDocs</h1>
+      
+      <p class="intro">
+        DevDocs is a comprehensive documentation site designed to help developers master modern web development technologies through clear, concise, and practical guides.
+      </p>
+      
+      <section class="mission">
+        <h2>Our Mission</h2>
+        <p>
+          Our mission is to provide high-quality, accessible documentation for developers at all skill levels. We believe that clear and comprehensive documentation is essential for learning and mastering new technologies.
+        </p>
+      </section>
+      
+      <section class="content">
+        <h2>Our Content</h2>
+        <p>
+          DevDocs offers articles covering a wide range of development topics, including:
+        </p>
+        <ul>
+          <li><strong>Frontend Development</strong>: JavaScript, CSS, frameworks like Vue.js and React</li>
+          <li><strong>Backend Development</strong>: Node.js, Express, databases, API design</li>
+          <li><strong>DevOps</strong>: Server configuration, deployment, CI/CD pipelines</li>
+          <li><strong>Developer Tools</strong>: Git, Chrome DevTools, VS Code, testing frameworks</li>
+        </ul>
+      </section>
+      
+      <section class="contribution">
+        <h2>Contribute</h2>
+        <p>
+          DevDocs is an open-source project and we welcome contributions from the community. Whether it's fixing a typo, adding a new article, or suggesting improvements, we appreciate all contributions.
+        </p>
+        <p>
+          <a href="/contribute" class="cta-button">Learn how to contribute</a>
+        </p>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .about-page {
+    padding: 2rem 0;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .intro {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  section {
+    margin-bottom: 3rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  ul {
+    margin-bottom: 1.5rem;
+  }
+  
+  li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #7c3aed;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+</style>

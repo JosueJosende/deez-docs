@@ -1,0 +1,158 @@
+---
+title: "Promesas en JavaScript"
+description: "Guía completa y visual para dominar las Promesas en JavaScript"
+pubDate: 2023-06-15
+category: "JavaScript"
+tags: ["promesas", "async", "javascript"]
+author: "JS Developer"
+featured: true
+---
+
+# Promesas en JavaScript
+
+Las **Promesas** son objetos que representan la finalización (o el fallo) de una operación asíncrona y su valor resultante. Son la base para escribir código moderno, limpio y fácil de mantener en JavaScript.
+
+---
+
+### Sintaxis Básica de una Promesa
+
+Una Promesa se crea usando el constructor `Promise`, que recibe una función (el "ejecutor") con dos parámetros: `resolve` y `reject`.
+
+```javascript
+const miPromesa = new Promise((resolve, reject) => {
+  // Operación asíncrona
+  if (/* operación exitosa */) {
+    resolve(valor); // Se cumplió correctamente
+  } else {
+    reject(error); // Se rechazó con un error
+  }
+});
+```
+
+---
+
+### Estados de una Promesa
+
+Una Promesa puede estar en uno de estos tres estados:
+
+1. **⏳ Pendiente**: Estado inicial, ni cumplida ni rechazada.
+2. **✅ Cumplida**: La operación terminó con éxito.
+3. **❌ Rechazada**: La operación falló.
+
+---
+
+### Métodos: Then, Catch y Finally
+
+Las promesas ofrecen métodos para manejar los resultados:
+
+#### `.then()`
+
+Maneja el estado **cumplido**:
+
+```javascript
+miPromesa.then((valor) => {
+  console.log('Éxito:', valor);
+});
+```
+
+#### `.catch()`
+
+Maneja el estado **rechazado**:
+
+```javascript
+miPromesa.catch((error) => {
+  console.error('Error:', error);
+});
+```
+
+#### `.finally()`
+
+Se ejecuta **siempre**, sin importar si la promesa fue cumplida o rechazada:
+
+```javascript
+miPromesa.finally(() => {
+  console.log('Promesa finalizada (cumplida o rechazada)');
+});
+```
+
+---
+
+### Encadenar Promesas
+
+Puedes encadenar promesas para manejar secuencias de operaciones asíncronas:
+
+```javascript
+obtenerDatos()
+  .then(datos => procesarDatos(datos))
+  .then(datosProcesados => mostrarDatos(datosProcesados))
+  .catch(error => manejarError(error));
+```
+
+---
+
+### Promise.all()
+
+Espera a que **todas** las promesas se resuelvan o que alguna sea rechazada:
+
+```javascript
+Promise.all([promesa1, promesa2, promesa3])
+  .then(valores => {
+    // Todas las promesas se cumplieron
+    console.log(valores); // Array de resultados
+  })
+  .catch(error => {
+    // Al menos una promesa fue rechazada
+    console.error(error);
+  });
+```
+
+---
+
+### Promise.race()
+
+Se resuelve o rechaza tan pronto como **cualquiera** de las promesas lo haga:
+
+```javascript
+Promise.race([promesa1, promesa2])
+  .then(valor => {
+    // Primera promesa cumplida
+    console.log(valor);
+  })
+  .catch(error => {
+    // Primera promesa rechazada
+    console.error(error);
+  });
+```
+
+---
+
+### ✨ Sintaxis moderna: Async/Await
+
+Una forma más legible de trabajar con promesas:
+
+```javascript
+async function obtenerYProcesar() {
+  try {
+    const datos = await obtenerDatos();
+    const procesados = await procesarDatos(datos);
+    return procesados;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+```
+
+---
+
+### ⚠️ Errores comunes
+
+- ❗ No manejar promesas rechazadas
+- ❗ Olvidar retornar valores en cadenas de promesas
+- ❗ Anidar promesas en vez de encadenarlas
+- ❗ No usar try/catch con async/await
+
+---
+
+### Conclusión
+
+Las **Promesas** son una herramienta poderosa para gestionar operaciones asíncronas en JavaScript. Usarlas correctamente hará tu código más limpio, legible y fácil de mantener, ¡olvídate de los callbacks anidados! 😉

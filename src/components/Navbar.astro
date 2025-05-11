@@ -1,0 +1,250 @@
+---
+// Get all unique categories from content collection
+import { getCollection } from 'astro:content';
+
+// const allArticles = await getCollection('articles');
+// const categories = [...new Set(allArticles.map(article => article.data.category))].sort();
+
+const allArticles = await getCollection('articles');
+const categoryCount = allArticles.reduce((acc, article) => {
+  const category = article.data.category;
+  acc[category] = (acc[category] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+// Sort categories by name
+const categories = Object.entries(categoryCount)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([name, count]) => ({ name, count }));
+---
+
+<header class="navbar">
+  <div class="container">
+    <a href="/" class="logo">
+      <span class="logo-text">Deez<span class="highlight">Docs</span></span>
+    </a>
+    
+    <nav class="main-nav">
+      <button id="menu-toggle" aria-label="Toggle navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      
+      <ul id="nav-menu">
+        {categories.map(category => (
+          <li>
+            <a href={`/category/${category.name.toLowerCase()}`} class="nav-link">
+              {category.name}
+            </a>
+            <small>{category.count}</small>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search articles..." />
+      <button aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle functionality
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  }
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (navMenu && navMenu.classList.contains('active') && 
+        !navMenu.contains(e.target) && 
+        !menuToggle?.contains(e.target as Node)) {
+      navMenu.classList.remove('active');
+    }
+  });
+</script>
+
+<style>
+  small {
+    border-radius: 9999px;
+    background-color: var(--color-bg-badge);
+    border: 1px solid var(--color-border);
+    width: 1.2rem;
+    height: 1.2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 0.75rem;
+  }
+  .navbar {
+    background-color: var(--color-bg-navbar);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+  }
+  
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+  
+  .highlight {
+    color: var(--color-primary);
+  }
+  
+  .main-nav {
+    display: flex;
+  }
+  
+  #menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  #nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  #nav-menu li {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  
+  .nav-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    /* padding: 0.5rem 0; */
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary);
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-bg-input);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 200px;
+  }
+  
+  #search {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    color: var(--color-text-primary);
+    width: 100%;
+    outline: none;
+  }
+  
+  #search::placeholder {
+    color: var(--color-text-secondary);
+  }
+  
+  .search-container button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .search-container button:hover {
+    color: var(--color-primary);
+  }
+  
+  @media (max-width: 768px) {
+    #menu-toggle {
+      display: block;
+    }
+    
+    #nav-menu {
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background-color: var(--color-bg-navbar);
+      padding: 1rem;
+      gap: 1rem;
+      transform: translateY(-150%);
+      transition: transform 0.3s ease;
+      z-index: 50;
+    }
+    
+    #nav-menu.active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .search-container {
+      width: 150px;
+    }
+  }
+</style>

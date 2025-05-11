@@ -1,0 +1,266 @@
+---
+import Layout from './Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { categoryIcons } from '../services/category-icons.ts';
+
+const categoryLogo: Record<string, { viewBox: string; src: string; color: string; bg: string }> = {
+  CSS: categoryIcons.CSS,
+  JavaScript: categoryIcons.JavaScript,
+  NodeJS: categoryIcons.NodeJS,
+  VueJS: categoryIcons.VueJS,
+  DevTools: categoryIcons.DevTools,
+  Server: categoryIcons.Server
+};
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  headings: { id: string; text: string; depth: number }[];
+}
+
+const { article, headings } = Astro.props;
+
+// Get category for breadcrumbs
+const category = article.data.category;
+const title = article.data.title;
+
+// Format date
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(article.data.pubDate);
+
+// Get related articles in the same category
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles
+  .filter(a => 
+    a.data.category === category && 
+    a.slug !== article.slug
+  )
+  .slice(0, 3);
+---
+
+<Layout title={title} description={article.data.description}>
+  <main class="article-page">
+    <div class="container">
+      <Breadcrumbs 
+        crumbs={[
+          { label: category, href: `/category/${category.toLowerCase()}` },
+          { label: title, href: `/article/${article.slug}` }
+        ]} 
+      />
+      
+      <div class="article-layout">
+        <article class="article-content">
+          <header class="article-header">
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox={categoryLogo[category]?.viewBox} class="category-icon">
+              <g set:html={categoryLogo[category].src} />
+            </svg>
+            <div class="article-info">
+              <div class="meta">
+                <span class="category" style={`color: ${categoryLogo[category].color}`}>{category}</span>
+                <span class="date">{formattedDate}</span>
+              </div>
+              {article.data.author && <p class="author">By {article.data.author}</p>}
+              
+            </div>
+          </header>
+          
+          <div class="content">
+            <slot />
+          </div>
+          
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="tags">
+              {article.data.tags.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </article>
+        
+        <aside class="article-sidebar">
+          
+          
+          {relatedArticles.length > 0 && (
+            <div class="related-articles">
+              <h2>Related Articles</h2>
+              <ul>
+                {relatedArticles.map(related => (
+                  <li>
+                    <a href={`/article/${related.slug}`}>
+                      {related.data.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <TableOfContents headings={headings} />
+        </aside>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .article-page {
+    padding-top: 2rem;
+  }
+  
+  .article-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 2rem;
+  }
+  
+  .article-content {
+    background-color: var(--color-bg-card);
+    border-radius: 8px;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+  }
+  
+  .article-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: .2rem;
+    font-size: 0.875rem;
+  }
+  
+  .category {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  
+  .date {
+    color: var(--color-text-secondary);
+  }
+  
+  .title {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .author {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    margin-bottom: 0 !important;
+  }
+
+  .category-icon {
+    width: 56px;
+    height: 56px;
+    pointer-events: none;
+  }
+  
+  .content {
+    /* Content styling is handled by global styles */
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .tag {
+    background-color: var(--color-bg-badge);
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+  
+  .related-articles {
+    background-color: var(--color-bg-card);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    margin-bottom: 2rem;
+  }
+  
+  .related-articles h2 {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .related-articles ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .related-articles li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .related-articles a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.3s ease;
+  }
+  
+  .related-articles li:last-child a {
+    border-bottom: none;
+  }
+  
+  .related-articles a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  
+  @media (max-width: 1024px) {
+    .article-layout {
+      grid-template-columns: 1fr;
+    }
+    
+    .article-sidebar {
+      order: -1;
+      
+    }
+    
+    .related-articles {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .article-content {
+      padding: 1.5rem;
+    }
+    
+    .title {
+      font-size: 1.75rem;
+    }
+  }
+</style>

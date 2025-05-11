@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Page Not Found">
+  <main class="not-found">
+    <div class="container">
+      <h1>404</h1>
+      <p class="subtitle">Page Not Found</p>
+      <p class="description">The page you are looking for doesn't exist or has been moved.</p>
+      <a href="/" class="back-home">Back to Home</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 8rem;
+    margin: 0;
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .description {
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+  }
+  
+  .back-home {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .back-home:hover {
+    background-color: #7c3aed;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+</style>

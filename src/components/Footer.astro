@@ -1,0 +1,143 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <span class="logo-text">Deez<span class="highlight">Docs</span></span>
+        <p class="tagline">Documentation and guides for developers</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="links-group">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contribute">Contribute</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div class="links-group">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="/category/javascript">JavaScript</a></li>
+            <li><a href="/category/css">CSS</a></li>
+            <li><a href="/category/nodejs">Node.js</a></li>
+            <li><a href="/category/server">Server</a></li>
+          </ul>
+        </div>
+        
+        <div class="links-group">
+          <h3>Connect</h3>
+          <ul>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a></li>
+            <li><a href="https://discord.com" target="_blank" rel="noopener">Discord</a></li>
+            <li><a href="/rss.xml">RSS Feed</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; {currentYear} DevDocs. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-bg-footer);
+    padding: 3rem 0 1rem;
+    margin-top: 4rem;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .footer-logo {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+  
+  .highlight {
+    color: var(--color-primary);
+  }
+  
+  .tagline {
+    margin-top: 0.5rem;
+    color: var(--color-text-secondary);
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
+  
+  .links-group h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+  }
+  
+  .links-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .links-group li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .links-group a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .links-group a:hover {
+    color: var(--color-primary);
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .footer-links {
+      gap: 2rem;
+    }
+  }
+</style>

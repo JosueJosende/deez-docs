@@ -1,0 +1,35 @@
+---
+title: "Altura con transicion en css"
+description: "Transiciones suaves de altura en tus elementos con CSS"
+pubDate: 2024-12-17
+category: "CSS"
+tags: ["css", "transitions"]
+author: "midudev"
+---
+
+# Altura con transicion en css
+
+lograr transiciones suaves y atractivas es una de las claves para mejorar la experiencia de usuario. Sin embargo, animar la altura de un elemento en CSS ha sido tradicionalmente un reto, especialmente cuando se desea pasar de un valor fijo a uno `auto`.
+
+Puedes animar la propiedad `height` de manera sencilla y efectiva, utilizando las últimas capacidades de CSS.
+Abajo, un ejemplo práctico y cómo implementarlo en tus propios proyectos.
+
+### Código
+```css
+  article {
+    height: 150px;
+    overflow: hidden;
+    transition: height .5s;
+    interpolate-size: allow-keywords;
+
+    &:hover {
+      height: auto;
+    }
+  }
+```
+### Ejemplo
+
+<div class="example">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAIby0lAZbSavsLUkf18GBH7syYEvnTBPpKA&s" />
+  <p> Spiderman, un super héroe que a raíz de una picada de araña obtiene poderes con los que combatirá el mal en la ciudad</p>
+</div>
