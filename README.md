@@ -1,48 +1,68 @@
-# Astro Starter Kit: Basics
+# deez-docs
 
-```sh
-npm create astro@latest -- --template basics
+Repositorio de documentación técnica y artículos sobre desarrollo web, organizado por categorías y construido con [Astro](https://astro.build/).
+
+![deez-docs screenshot](/public/screenshot.png)
+
+## Características
+
+- Generador de documentación estática con Astro.
+- Artículos en formato Markdown/MDX organizados por categorías (CSS, JavaScript, Node.js, Vue.js, Server, Devtools).
+- Navegación por categorías y artículos.
+- Componentes personalizados para tarjetas, listas, breadcrumbs, tabla de contenidos y más.
+- Layouts reutilizables para artículos y páginas generales.
+- Sistema de iconos para categorías.
+- Página de contribución y error 404 personalizada.
+
+## Estructura del proyecto
+
+```
+src/
+  assets/                # Recursos estáticos
+  components/            # Componentes Astro reutilizables
+  content/
+	 config.ts            # Configuración de categorías y rutas
+	 articles/            # Artículos organizados por carpetas temáticas
+  layouts/               # Layouts para páginas y artículos
+  pages/                 # Páginas principales y rutas dinámicas
+  services/              # Servicios auxiliares (iconos, etc.)
+public/                  # Archivos públicos
+astro.config.mjs         # Configuración de Astro
+tsconfig.json            # Configuración de TypeScript
+package.json             # Dependencias y scripts
+pnpm-lock.yaml           # Bloqueo de dependencias
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Instalación
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/deez-docs.git
+   cd deez-docs
+   ```
+2. Instala las dependencias:
+   ```bash
+   pnpm install
+   ```
+3. Inicia el servidor de desarrollo:
+   ```bash
+   pnpm dev
+   ```
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Scripts útiles
 
-## 🚀 Project Structure
+- `pnpm dev` — Inicia el servidor de desarrollo.
+- `pnpm build` — Genera la versión estática para producción.
+- `pnpm preview` — Previsualiza la versión de producción.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Cómo contribuir
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+1. Crea un fork del repositorio.
+2. Añade o edita artículos en `src/content/articles/`.
+3. Haz un pull request con tus cambios.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Consulta la página `/contribute` para más detalles.
 
-## 🧞 Commands
+## Licencia
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
