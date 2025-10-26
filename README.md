@@ -16,16 +16,16 @@ Repositorio de documentación técnica y artículos sobre desarrollo web, organi
 
 ## Estructura del proyecto
 
-```
+```text
 src/
-  assets/                # Recursos estáticos
-  components/            # Componentes Astro reutilizables
-  content/
-	 config.ts            # Configuración de categorías y rutas
-	 articles/            # Artículos organizados por carpetas temáticas
-  layouts/               # Layouts para páginas y artículos
-  pages/                 # Páginas principales y rutas dinámicas
-  services/              # Servicios auxiliares (iconos, etc.)
+   assets/                # Recursos estáticos
+   components/            # Componentes Astro reutilizables
+   content/
+      config.ts            # Configuración de categorías y rutas
+      articles/            # Artículos organizados por carpetas temáticas
+   layouts/               # Layouts para páginas y artículos
+   pages/                 # Páginas principales y rutas dinámicas
+   services/              # Servicios auxiliares (iconos, etc.)
 public/                  # Archivos públicos
 astro.config.mjs         # Configuración de Astro
 tsconfig.json            # Configuración de TypeScript
@@ -36,15 +36,20 @@ pnpm-lock.yaml           # Bloqueo de dependencias
 ## Instalación
 
 1. Clona el repositorio:
+
    ```bash
    git clone https://github.com/tu-usuario/deez-docs.git
    cd deez-docs
    ```
+
 2. Instala las dependencias:
+
    ```bash
    pnpm install
    ```
+
 3. Inicia el servidor de desarrollo:
+
    ```bash
    pnpm dev
    ```
